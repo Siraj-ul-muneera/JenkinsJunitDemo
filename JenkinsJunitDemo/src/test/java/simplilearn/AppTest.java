@@ -1,38 +1,49 @@
-package simplilearn;
+Import or.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
+public class JenkinsJunitDemo
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
+    private static String Base_Url = "https://www.facebook.com";
+    private WebDriver driver;
+
+    @Before
+    public void setUp() 
     {
-        super( testName );
+        driver = new ChromeDriver();
+        driver.get(Base_Url);
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
+    @After
+    public void after()
     {
-        return new TestSuite( AppTest.class );
+        driver.quit();
     }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
+    @Test
+    public void testCasePassed()
     {
-        assertTrue( true );
+        Assert.assertTrue(driver.findElement(By.xpath("//form[@id='login_form']")).isDisplayed());
+    }
+
+    @Test
+    public void testCaseFailed()
+    {
+        Assert.assertTrue(driver.findElement(By.xpath("//form[@id='failed case']")).isDisplayed());
+    }
+
+    @Ignore
+    @Test
+    public void testCaseIgnored()
+    {
+        Assert.assertTrue(driver.findElement(By.xpath("//form[@id='ignored case']")).isDisplayed());
     }
 }
+
+
